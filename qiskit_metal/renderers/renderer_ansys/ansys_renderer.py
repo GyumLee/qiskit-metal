@@ -341,7 +341,7 @@ class QAnsysRenderer(QRendererAnalysis):
         self,
         path: str = None,
         executable: str = "reg_ansysedt.exe",
-        path_var: str = "ANSYSEM_ROOT202",
+        path_var: str = "AnsysEM21.1",
     ):
         """Alternative method to open an Ansys session that allows to specify
                 which version to use. Default is version 2020 R2, but can be overridden.
@@ -777,7 +777,7 @@ class QAnsysRenderer(QRendererAnalysis):
                     adesign = self.pinfo.project.new_q3d_design(design_name)
                 elif solution_type == "eigenmode":
                     adesign = self.pinfo.project.new_em_design(design_name)
-                elif solution_type == "drivenmodal":
+                elif "Modal" or "modal" in solution_type:
                     adesign = self.pinfo.project.new_dm_design(design_name)
                 else:
                     self.logger.error(
@@ -882,7 +882,7 @@ class QAnsysRenderer(QRendererAnalysis):
 
                 if self.pinfo.design.solution_type == "Eigenmode":
                     setup = self.add_eigenmode_setup(name, **other_setup)
-                elif self.pinfo.design.solution_type == "DrivenModal":
+                elif "Modal" in self.pinfo.design.solution_type:
                     setup = self.add_drivenmodal_setup(name, **other_setup)
                 elif self.pinfo.design.solution_type == "Q3D":
                     setup = self.add_q3d_setup(name, **other_setup)
